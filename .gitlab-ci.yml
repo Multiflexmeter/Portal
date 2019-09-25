@@ -30,7 +30,7 @@ test:
 deploy_production:
   stage: deploy
   script:
-    - echo "TODO $CI_ENVIRONMENT_URL"
+    - echo $PRODUCTION_URL
   environment:
     name: production
   # only:
