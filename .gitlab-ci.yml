@@ -14,6 +14,7 @@ cache:
 
 stages:
   - test
+  - deploy
 
 before_script:
   - yarn install
@@ -26,3 +27,12 @@ test:
     paths:
       - coverage/
 
+deploy_production:
+  stage: deploy
+  script:
+    - echo "TODO $CI_ENVIRONMENT_URL"
+  environment:
+    name: production
+  only:
+    - master
+  
