@@ -33,6 +33,6 @@ deploy_production:
     - echo "TODO $CI_ENVIRONMENT_URL"
   environment:
     name: production
-  only:
-    - master
+  # only:
+  #   - master
   
