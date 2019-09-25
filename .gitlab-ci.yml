@@ -12,9 +12,19 @@ cache:
   paths:
     - node_modules/
 
+stages:
+  - test
+  - coverage
+
 before_script:
   - yarn install
 
-tests:
+test:
+  stage: test
   script:
     - yarn test
+
+coverage:
+  stage: coverage
+  script:
+    - yarn coverage
