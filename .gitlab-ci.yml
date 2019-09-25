@@ -14,7 +14,6 @@ cache:
 
 stages:
   - test
-  - coverage
 
 before_script:
   - yarn install
@@ -23,8 +22,7 @@ test:
   stage: test
   script:
     - yarn test
+  artifacts:
+    paths:
+      - coverage/
 
-coverage:
-  stage: coverage
-  script:
-    - yarn coverage
