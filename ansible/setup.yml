@@ -23,12 +23,13 @@
         line: '%wheel ALL=(ALL) NOPASSWD: ALL'
         validate: 'visudo -cf %s'
     
-    - name: Ensure user 'portal' exists
+    - name: Ensure user {{ deploy_user }} exists
       user:
-        name: portal
+        name: "{{ deploy_user }}"
         state: present
         group: wheel
         append: yes
+        home: "/home/{{ deploy_user }}"
     
     - name: Authorize SSH
       authorized_key:
@@ -38,6 +39,6 @@
     
     - name: Ensure deploy location exists
       file:
-        owner: portal
+        owner: "{{ deploy_user }}"
         path: "{{ deploy_path }}"
         state: directory
