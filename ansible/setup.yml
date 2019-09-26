@@ -1,0 +1,43 @@
+# This playbook ensures that the user portal exists
+# and has proper permissions.
+#
+# You should have super user rights on the target
+# servers. (Also see -K parameter)
+
+---
+- hosts: servers
+  become: true
+  roles:
+    - nodejs
+  tasks:
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+
+    - name: Allow 'wheel' group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
+    
+    - name: Ensure user 'portal' exists
+      user:
+        name: portal
+        state: present
+        group: wheel
+        append: yes
+    
+    - name: Authorize SSH
+      authorized_key:
+        user: portal
+        state: present
+        key: "{{ lookup('file', './keypairs/deploy_key.pub') }}"
+    
+    - name: Ensure deploy location exists
+      file:
+        owner: portal
+        path: "{{ deploy_path }}"
+        state: directory
