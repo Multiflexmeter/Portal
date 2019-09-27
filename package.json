@@ -39,7 +39,7 @@
     "all": true,
     "include": ["src/**/*.ts"],
     "exclude": ["**/*.test.ts"],
-    "check-coverage": true,
+    "check-coverage": false,
     "reporter": [
       "text-summary",
       "lcov"
