@@ -5,7 +5,8 @@
   "main": "dist/entry.js",
   "scripts": {
     "compile": "tsc",
-    "start": "yarn compile && node dist/entry.js",
+    "start:dev": "ts-node-dev",
+    "start:prod": "pm2 startOrGracefulReload ecosystem.config.js portal-api",
     "test": "nyc mocha -r ts-node/register tests/**/*.test.ts"
   },
   "repository": "git@github.com:Multiflexmeter/Portal.git",
