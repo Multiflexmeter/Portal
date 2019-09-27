@@ -12,13 +12,15 @@ stages:
   - package
   - deploy
 
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - yarn install
+
 test:
   stage: test
-  cache:
-    paths:
-      - node_modules/
-  before_script:
-    - yarn install
   script:
     - yarn test
   artifacts:
