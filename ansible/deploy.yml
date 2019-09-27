@@ -1,3 +1,22 @@
 ---
 - hosts: servers
   remote_user: "{{ deploy_user }}"
+  tasks:
+    - name: Checkout repository
+      git:
+        repo: "{{ source_repository }}"
+        dest: "{{ deploy_path }}"
+        version: "{{ source_version }}"
+        force: yes
+    
+    - name: Install dependencies
+      shell: cd {{ deploy_path }} && yarn --production
+    
+    - name: Compile code
+      shell: cd {{ deploy_path }} && yarn run compile
+    
+    - name: Start updated servers
+      shell: cd {{ deploy_path }} && yarn run start:prod
+    
+    - name: Save ecosystem to startup
+      command: pm2 save

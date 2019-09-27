@@ -42,3 +42,18 @@
         owner: "{{ deploy_user }}"
         path: "{{ deploy_path }}"
         state: directory
+      
+    - name: Install yarn (package manager)
+      npm:
+        name: yarn
+        global: yes
+      
+    - name: Install PM2 (process manager)
+      npm:
+        name: pm2
+        global: yes
+
+    - name: Setup PM2 for start up
+      become: no
+      remote_user: "{{ deploy_user }}"
+      shell: "pm2 startup | sed -n '/the following command/{n;p;}' | bash"
