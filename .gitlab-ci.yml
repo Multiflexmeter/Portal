@@ -9,6 +9,7 @@ image: node:latest
 
 stages:
   - test
+  - package
   - deploy
 
 test:
@@ -23,6 +24,17 @@ test:
   artifacts:
     paths:
       - coverage/
+
+package_production:
+  stage: package
+  script:
+    - yarn compile
+  artifacts:
+    name: "package-$CI_COMMIT_SHA"
+    paths:
+      - dist/
+  # when:
+  #   - tag
 
 deploy_production:
   stage: deploy
