@@ -38,7 +38,7 @@ package:production:
   #   - tag
 
 deploy:production:
-  image: ansible/ansible:ubuntu1604
+  image: williamyeh/ansible:alpine3-onbuild
   stage: deploy
   dependencies:
     - package:production
