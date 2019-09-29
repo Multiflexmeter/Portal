@@ -1,4 +1,3 @@
 *inventory*
 !inventory.yml.example
-group_vars/*
-!group_vars/*.example
+keypairs/

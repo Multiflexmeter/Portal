@@ -1,6 +1,6 @@
 sitename: portal.multiflexmeter.net
 source_repository: "https://github.com/Multiflexmeter/Portal.git"
-source_version: origin/master
+source_version: origin/feature-ci-cd
 deploy_user: portal
 deploy_path: "/srv/{{ sitename }}"
 
