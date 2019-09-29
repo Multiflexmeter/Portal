@@ -12,8 +12,11 @@
     - name: Install dependencies
       shell: cd {{ deploy_path }} && yarn --production
     
-    - name: Compile code
-      shell: cd {{ deploy_path }} && yarn run compile
+    - name: Copy transpiled code
+      copy:
+        src: ../dist/
+        dest: "{{ deploy_path }}/dist/"
+        owner: "{{ deploy_user }}"
     
     - name: Start updated servers
       shell: cd {{ deploy_path }} && yarn run start:prod
