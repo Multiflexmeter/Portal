@@ -15,13 +15,11 @@ stages:
 cache:
   paths:
     - node_modules/
-
-before_script:
-  - yarn install
-
+    
 test:
   stage: test
   script:
+    - yarn install
     - yarn test
   artifacts:
     paths:
@@ -30,6 +28,7 @@ test:
 package:production:
   stage: package
   script:
+    - yarn install
     - yarn compile
   artifacts:
     name: "package"
@@ -39,7 +38,7 @@ package:production:
   #   - tag
 
 deploy:production:
-  image: ansible/ansible
+  image: ansible/ansible:ubuntu1604
   stage: deploy
   dependencies:
     - package:production
