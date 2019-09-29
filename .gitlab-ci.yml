@@ -39,6 +39,7 @@ package:production:
   #   - tag
 
 deploy:production:
+  image: ansible/ansible
   stage: deploy
   dependencies:
     - package:production
