@@ -38,11 +38,12 @@ package:production:
   #   - tag
 
 deploy:production:
-  image: williamyeh/ansible:alpine3-onbuild
+  image: williamyeh/ansible:ubuntu18.04
   stage: deploy
   dependencies:
     - package:production
   script:
+    - ansible --version
     - ansible-playbook -i $ANSIBLE_INVENTORY ansible/deploy.yml
     # - ansible-playbook ansible/deploy.yml -i "$ANSIBLE_INVENTORY" --extra-vars="ansible_ssh_private_key_file=$DEPLOY_KEY_FILE"
   environment:
