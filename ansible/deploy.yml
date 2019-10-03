@@ -14,8 +14,8 @@
     
     - name: Copy transpiled code
       copy:
-        src: ../dist/
-        dest: "{{ deploy_path }}/dist/"
+        src: ../dist
+        dest: "{{ deploy_path }}/"
         owner: "{{ deploy_user }}"
     
     - name: Start updated servers
