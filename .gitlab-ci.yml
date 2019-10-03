@@ -44,8 +44,9 @@ deploy:production:
     - package:production
   script:
     - ansible --version
-    # - cat $DEPLOY_KEY_FILE > ansible/keypairs/deploy_key 
-    - ansible-playbook -i $ANSIBLE_INVENTORY -e ansible_ssh_private_key_file=$DEPLOY_KEY_FILE ansible/deploy.yml
+    - mkdir -p ansible/keypairs/
+    - cat $DEPLOY_KEY_FILE > ansible/keypairs/deploy_key 
+    - ansible-playbook -i $ANSIBLE_INVENTORY ansible/deploy.yml
     # - ansible-playbook ansible/deploy.yml -i "$ANSIBLE_INVENTORY" --extra-vars="ansible_ssh_private_key_file=$DEPLOY_KEY_FILE"
   environment:
     name: production
