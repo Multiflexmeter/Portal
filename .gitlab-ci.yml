@@ -46,7 +46,7 @@ build:container:
 test:
   stage: test
   script:
-    - docker run --rm -v -w /srv/app $(pwd):/srv/app portal yarn test
+    - docker run --rm -w /srv/app -v $(pwd):/srv/app portal yarn test
   artifacts:
     paths:
       - coverage/
