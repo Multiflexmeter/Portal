@@ -23,16 +23,21 @@ build:container:
   script:
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10-alpine yarn install
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10-alpine yarn build
-    - docker build . -t portal
+    - docker build . -t pollex/portal
+    - docker save pollex/portal | gzip > portal_image.tar.gz
   artifacts:
     paths:
       - dist/
+      - portal_image.tar.gz
 
 # Test through the built container
 test:
   stage: test
+  dependencies:
+    - build:container
   script:
-    - docker run --rm -w /srv/app -v $(pwd):/srv/app portal yarn test
+    - docker load --input portal_image.tar.gz
+    - docker run --rm -w /srv/app -v $(pwd):/srv/app pollex/portal yarn test
   artifacts:
     paths:
       - coverage/
@@ -40,8 +45,11 @@ test:
 # Deploy the previously built container to the Docker registery
 deploy:container:
   stage: deploy
+  dependencies:
+    - build:container
   script:
+    - docker load --input portal_image.tar.gz
     - echo $DOCKER_ACCESS_TOKEN | docker login --username timvosch --password-stdin
-    - docker push pollex/portal:latest
+    - docker push pollex/portal
   # only:
   #   - master
