@@ -12,6 +12,9 @@ variables:
 services:
   - docker:dind
 
+cache:
+  - node_modules/
+
 stages:
   - build
   - test
@@ -51,7 +54,7 @@ deploy:container:
     - build:container
   before_script:
     - docker load --input portal_image.tar.gz
-    - echo $DOCKER_ACCESS_TOKEN | docker login --username timvosch --password-stdin
+    - echo $DOCKER_ACCESS_CONFIG > ~/.docker/config.json
   script:
     - docker push pollex/portal
   # only:
