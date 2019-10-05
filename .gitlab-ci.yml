@@ -12,23 +12,16 @@ stages:
   - test
   - deploy
 
-# Build the project through "yarn build"
-build:source:
+# Build the project source and container
+build:container:
   stage: build
   script:
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10 yarn install
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10 yarn build
+    - docker build . -t portal
   artifacts:
     paths:
       - dist/
-
-# Build the Docker container
-build:container:
-  stage: build
-  dependencies:
-    - build:source
-  script:
-    - docker build . -t portal
 
 # Test through the built container
 test:
