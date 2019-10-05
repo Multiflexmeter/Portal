@@ -1,7 +1,7 @@
 # This file is a template, and might need editing before it works on your project.
 # Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/node/tags/
-image: docker
+image: docker:dind
 
 # Docker services
 # services:
@@ -18,10 +18,15 @@ build:source:
   script:
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10 yarn install
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10 yarn build
+  artifacts:
+    paths:
+      - dist/
 
 # Build the Docker container
 build:container:
   stage: build
+  dependencies:
+    - build:source
   script:
     - docker build . -t portal
 
