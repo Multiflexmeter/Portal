@@ -13,7 +13,8 @@ services:
   - docker:dind
 
 cache:
-  - node_modules/
+  paths:
+    - node_modules/
 
 stages:
   - build
