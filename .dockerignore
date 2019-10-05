@@ -1,0 +1,4 @@
+node_modules/
+ansible/
+coverage/
+*.log
