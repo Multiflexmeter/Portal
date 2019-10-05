@@ -55,6 +55,7 @@ deploy:container:
     - build:container
   before_script:
     - docker load --input portal_image.tar.gz
+    - mkdir -p ~/.docker
     - echo $DOCKER_ACCESS_CONFIG > ~/.docker/config.json
   script:
     - docker push pollex/portal
