@@ -4,7 +4,7 @@
   "description": "The Multiflexmeter Management Portal",
   "main": "dist/entry.js",
   "scripts": {
-    "compile": "tsc",
+    "build": "tsc",
     "start:dev": "ts-node-dev",
     "start:prod": "pm2 startOrGracefulReload ecosystem.config.js portal-api",
     "test": "nyc mocha -r ts-node/register tests/**/*.test.ts"
