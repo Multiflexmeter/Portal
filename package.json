@@ -14,7 +14,6 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "pm2": "^3.5.1"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
