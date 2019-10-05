@@ -35,8 +35,10 @@ test:
   stage: test
   dependencies:
     - build:container
-  script:
+  before_script:
     - docker load --input portal_image.tar.gz
+    - docker run --rm -w /srv/app -v $(pwd):/srv/app pollex/portal yarn install
+  script:
     - docker run --rm -w /srv/app -v $(pwd):/srv/app pollex/portal yarn test
   artifacts:
     paths:
@@ -47,9 +49,10 @@ deploy:container:
   stage: deploy
   dependencies:
     - build:container
-  script:
+  before_script:
     - docker load --input portal_image.tar.gz
     - echo $DOCKER_ACCESS_TOKEN | docker login --username timvosch --password-stdin
+  script:
     - docker push pollex/portal
   # only:
   #   - master
