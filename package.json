@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start:dev": "ts-node-dev",
-    "start:prod": "pm2-runtime ecosystem.config.js --only portal-api",
+    "start:prod": "pm2-runtime start pm2.json",
     "test": "nyc mocha -r ts-node/register tests/**/*.test.ts"
   },
   "repository": "git@github.com:Multiflexmeter/Portal.git",
