@@ -22,7 +22,7 @@ stages:
   - deploy
 
 # Build the project source and container
-build:container:
+build:
   stage: build
   script:
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10-alpine yarn install
@@ -38,7 +38,7 @@ build:container:
 test:
   stage: test
   dependencies:
-    - build:container
+    - build
   before_script:
     - docker load --input portal_image.tar.gz
     - docker run --rm -w /srv/app -v $(pwd):/srv/app pollex/portal:dev yarn install
@@ -49,10 +49,10 @@ test:
       - coverage/
 
 # Deploy the previously built container to the Docker registery
-deploy:container:
+deploy:
   stage: deploy
   dependencies:
-    - build:container
+    - build
   before_script:
     - docker load --input portal_image.tar.gz
     - mkdir -p ~/.docker
