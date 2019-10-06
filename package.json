@@ -43,7 +43,7 @@
     "exclude": [
       "**/*.test.ts"
     ],
-    "check-coverage": false,
+    "check-coverage": true,
     "reporter": [
       "text-summary",
       "lcov"
