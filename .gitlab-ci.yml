@@ -21,7 +21,7 @@ stages:
   - test
   - deploy
 
-# Build the project source and container
+# Always build a dev image. This container will be used in follow up jobs.
 build:
   stage: build
   script:
@@ -34,7 +34,7 @@ build:
       - dist/
       - portal_image.tar.gz
 
-# Test through the built container
+# Use the dev image with the repo mounted to perform tests.
 test:
   stage: test
   dependencies:
@@ -48,8 +48,9 @@ test:
     paths:
       - coverage/
 
-# Deploy the previously built container to the Docker registery
-deploy:
+# When this is a build on the master branch, tag the image with :latest
+# and push it to the image repository.
+deploy:master:
   stage: deploy
   dependencies:
     - build
@@ -62,3 +63,20 @@ deploy:
     - docker push pollex/portal:latest
   only:
     - master
+
+
+# When this is a build on the dev branch, tag the image with :edge
+# and push it to the image repository.
+deploy:edge:
+  stage: deploy
+  dependencies:
+    - build
+  before_script:
+    - docker load --input portal_image.tar.gz
+    - mkdir -p ~/.docker
+    - echo $DOCKER_ACCESS_CONFIG > ~/.docker/config.json
+  script:
+    - docker tag pollex/portal:dev pollex/portal:edge
+    - docker push pollex/portal:edge
+  only:
+    - dev
