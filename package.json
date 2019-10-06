@@ -10,9 +10,9 @@
     "test": "nyc mocha -r ts-node/register tests/**/*.test.ts",
 
     "build:image": "docker build . -t pollex/portal:local --build-arg UID=$(id -u) --build-arg GID=$(id -g)",
-    "docker": "docker run -p 9229:9229 -p 3000:3000 -v $(pwd):/srv/app -it pollex/portal:local",
-    "docker:start:dev": "docker run -p 9229:9229 -p 3000:3000 -v $(pwd):/srv/app pollex/portal:local yarn start:dev",
-    "docker:test": "docker run -p 9230:9229 -v $(pwd):/srv/app pollex/portal:local yarn test"
+    "docker": "docker run --rm -it -v $(pwd):/srv/app pollex/portal:local",
+    "docker:start:dev": "docker run --rm -it -p 9229:9229 -p 3000:3000 -v $(pwd):/srv/app pollex/portal:local yarn start:dev",
+    "docker:test": "docker run --rm -it -p 9230:9229 -v $(pwd):/srv/app pollex/portal:local yarn test"
   },
   "repository": "git@github.com:Multiflexmeter/Portal.git",
   "author": "Tim van Osch <timvosch@pollex.nl>",
