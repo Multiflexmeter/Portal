@@ -20,7 +20,7 @@ COPY pm2.json .
 
 
 # Install dependencies
-RUN ["yarn", "install", "--production"]
+RUN yarn install --frozen-lockfile --production && yarn cache clean
 
 # Fix permissions
 RUN ["chown", "node:node", "-R", "."]
