@@ -33,7 +33,7 @@ The package file provides you with a set of helper scripts. Note that these scri
  - `yarn test` | **Performs unit tests and code-coverage**
 
 ### Running and testing
- You will most likely want to run start:dev and test through the following scripts. These will publish ports to the host machine.
+ You will most likely want to run start:dev and test in Docker through the following scripts. These will publish ports to the host machine for debugging and interaction.
 
  - `yarn docker:start:dev` | **Also publishes debug port and web port (9229 and 3000)**
  - `yarn docker:test` | **Also publishes debug port on 9230**
