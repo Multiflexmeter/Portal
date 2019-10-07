@@ -1,5 +1,5 @@
 # Build from the Node Latest Stable docker image
-FROM keymetrics/pm2:10-slim
+FROM node:slim
 
 # Prepare user with uid and gid
 ARG UID=1000
@@ -27,4 +27,4 @@ RUN ["chown", "node:node", "-R", "."]
 
 USER node
 
-CMD [ "pm2-runtime", "start", "pm2.json" ]
+CMD [ "yarn", "pm2-runtime", "start", "pm2.json" ]
