@@ -5,10 +5,9 @@
   "main": "dist/entry.js",
   "scripts": {
     "build": "tsc",
-    "start:dev": "ts-node-dev --respawn src/entry.ts",
+    "start:dev": "ts-node-dev --inspect=0.0.0.0:9229 --respawn src/entry.ts",
     "start:prod": "pm2-runtime start pm2.json",
-    "test": "nyc mocha -r ts-node/register tests/**/*.test.ts",
-
+    "test": "nyc mocha -r ts-node/register --inspect=0.0.0.0:9229 tests/**/*.test.ts",
     "build:image": "docker build . -t pollex/portal:local --build-arg UID=$(id -u) --build-arg GID=$(id -g)",
     "docker": "docker run --rm -it -v $(pwd):/srv/app pollex/portal:local",
     "docker:start:dev": "docker run --rm -it -p 9229:9229 -p 3000:3000 -v $(pwd):/srv/app pollex/portal:local yarn start:dev",
