@@ -27,8 +27,8 @@ build:
   script:
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10-alpine yarn install
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10-alpine yarn build
-    - docker build . -t pollex/portal:dev
-    - docker save pollex/portal:dev | gzip > portal_image.tar.gz
+    - docker build . -t pollex/portal:local --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+    - docker save pollex/portal:local | gzip > portal_image.tar.gz
   artifacts:
     paths:
       - dist/
@@ -41,9 +41,9 @@ test:
     - build
   before_script:
     - docker load --input portal_image.tar.gz
-    - docker run --rm -w /srv/app -v $(pwd):/srv/app pollex/portal:dev yarn install
+    - docker run --rm -v $(pwd):/srv/app pollex/portal:local yarn install
   script:
-    - docker run --rm -w /srv/app -v $(pwd):/srv/app pollex/portal:dev yarn test
+    - docker run --rm -v $(pwd):/srv/app pollex/portal:local yarn test
   artifacts:
     paths:
       - coverage/
@@ -59,7 +59,7 @@ deploy:master:
     - mkdir -p ~/.docker
     - echo $DOCKER_ACCESS_CONFIG > ~/.docker/config.json
   script:
-    - docker tag pollex/portal:dev pollex/portal:latest
+    - docker tag pollex/portal:local pollex/portal:latest
     - docker push pollex/portal:latest
   only:
     - master
@@ -76,7 +76,7 @@ deploy:edge:
     - mkdir -p ~/.docker
     - echo $DOCKER_ACCESS_CONFIG > ~/.docker/config.json
   script:
-    - docker tag pollex/portal:dev pollex/portal:edge
+    - docker tag pollex/portal:local pollex/portal:edge
     - docker push pollex/portal:edge
   only:
     - dev
