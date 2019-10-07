@@ -23,7 +23,7 @@ COPY pm2.json .
 RUN yarn install --frozen-lockfile --production && yarn cache clean
 
 # Fix permissions
-RUN ["chown", "node:node", "-R", "."]
+RUN chown -R $UID:$GID /srv/app
 
 USER node
 
