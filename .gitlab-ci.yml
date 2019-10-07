@@ -27,7 +27,7 @@ build:
   script:
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10-alpine yarn install
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10-alpine yarn build
-    - docker build . -t pollex/portal:local --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+    - docker build . -t pollex/portal:local
     - docker save pollex/portal:local | gzip > portal_image.tar.gz
   artifacts:
     paths:
@@ -41,6 +41,7 @@ test:
     - build
   before_script:
     - docker load --input portal_image.tar.gz
+    - chown 1000:1000 -R ./
     - docker run --rm -v $(pwd):/srv/app pollex/portal:local yarn install
   script:
     - docker run --rm -v $(pwd):/srv/app pollex/portal:local yarn test
