@@ -1,5 +1,5 @@
-# Portal
-The MFM Portal covers device management and data processing
+# {{cookiecutter.service_name_pretty}}
+{{cookiecutter.service_description}}
 
 # Development
 This project uses [Docker](https://docker.com/) to remove problems surrounding development environments. Docker can run services temporarily during development without cluttering your device.
@@ -18,7 +18,7 @@ yarn build:image
 This is a script for:
 ```
 docker build .
-  -t pollex/portal:local
+  -t {{cookiecutter.docker_image_name}}:local
   --build-arg UID=$(id -u)
   --build-arg GID=$(id -g)
 ```

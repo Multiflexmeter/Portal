@@ -1,0 +1,7 @@
+{
+  "service_name": "portal-service",
+  "service_name_pretty": "Portal Service",
+  "service_description": "{{cookiecutter.service_name_pretty}}",
+  "docker_image_name": "pollex/{{cookiecutter.service_name}}",
+  "author": "Tim van Osch <timvosch@pollex.nl>"
+}
