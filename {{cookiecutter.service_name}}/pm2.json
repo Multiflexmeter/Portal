@@ -1,5 +1,5 @@
 {
-  "name": "portal",
+  "name": "{{cookiecutter.service_name}}",
   "script": "dist/entry.js",
   "exec_mode" : "cluster",
   "instances": "max",

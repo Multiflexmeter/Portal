@@ -27,12 +27,11 @@ build:
   script:
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10-alpine yarn install
     - docker run --rm -w /srv/app -v $(pwd):/srv/app node:10-alpine yarn build
-    - docker build . -t pollex/portal:local
-    - docker save pollex/portal:local | gzip > portal_image.tar.gz
+    - docker build . -t {{cookiecutter.docker_image_name}}:local
+    - docker save {{cookiecutter.docker_image_name}}:local | gzip > {{cookiecutter.service_name}}_image.tar.gz
   artifacts:
     paths:
-      - dist/
-      - portal_image.tar.gz
+      - {{cookiecutter.service_name}}_image.tar.gz
 
 # Use the dev image with the repo mounted to perform tests.
 test:
@@ -40,11 +39,11 @@ test:
   dependencies:
     - build
   before_script:
-    - docker load --input portal_image.tar.gz
+    - docker load --input {{cookiecutter.service_name}}_image.tar.gz
     - chown 1000:1000 -R ./
-    - docker run --rm -v $(pwd):/srv/app pollex/portal:local yarn install
+    - docker run --rm -v $(pwd):/srv/app {{cookiecutter.docker_image_name}}:local yarn install
   script:
-    - docker run --rm -v $(pwd):/srv/app pollex/portal:local yarn test
+    - docker run --rm -v $(pwd):/srv/app {{cookiecutter.docker_image_name}}:local yarn test
   artifacts:
     paths:
       - coverage/
@@ -56,12 +55,12 @@ deploy:master:
   dependencies:
     - build
   before_script:
-    - docker load --input portal_image.tar.gz
+    - docker load --input {{cookiecutter.service_name}}_image.tar.gz
     - mkdir -p ~/.docker
     - echo $DOCKER_ACCESS_CONFIG > ~/.docker/config.json
   script:
-    - docker tag pollex/portal:local pollex/portal:latest
-    - docker push pollex/portal:latest
+    - docker tag {{cookiecutter.docker_image_name}}:local {{cookiecutter.docker_image_name}}:latest
+    - docker push {{cookiecutter.docker_image_name}}:latest
   only:
     - master
 
@@ -73,11 +72,11 @@ deploy:edge:
   dependencies:
     - build
   before_script:
-    - docker load --input portal_image.tar.gz
+    - docker load --input {{cookiecutter.service_name}}_image.tar.gz
     - mkdir -p ~/.docker
     - echo $DOCKER_ACCESS_CONFIG > ~/.docker/config.json
   script:
-    - docker tag pollex/portal:local pollex/portal:edge
-    - docker push pollex/portal:edge
+    - docker tag {{cookiecutter.docker_image_name}}:local {{cookiecutter.docker_image_name}}:edge
+    - docker push {{cookiecutter.docker_image_name}}:edge
   only:
     - dev
