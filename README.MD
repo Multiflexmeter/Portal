@@ -42,7 +42,7 @@ The template contains the following files:
 ├────── pm2.json
 ├────── README.md
 ├────── src
-│   └────── entry.ts
+│   └────── app.ts
 ├────── tests
 │   └────── example.test.ts
 ├────── tsconfig.json

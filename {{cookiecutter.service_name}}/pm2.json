@@ -1,6 +1,6 @@
 {
   "name": "{{cookiecutter.service_name}}",
-  "script": "dist/entry.js",
+  "script": "dist/app.js",
   "exec_mode" : "cluster",
   "instances": "max",
   "env": {

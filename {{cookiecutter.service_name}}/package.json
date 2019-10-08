@@ -2,10 +2,10 @@
   "name": "{{cookiecutter.service_name}}",
   "version": "0.0.1",
   "description": "{{cookiecutter.service_description}}",
-  "main": "dist/entry.js",
+  "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
-    "start:dev": "ts-node-dev --inspect=0.0.0.0:9229 --respawn src/entry.ts",
+    "start:dev": "ts-node-dev --inspect=0.0.0.0:9229 --respawn src/app.ts",
     "start:prod": "pm2-runtime start pm2.json",
     "test": "nyc mocha -r ts-node/register --inspect=0.0.0.0:9229 tests/**/*.test.ts",
     "build:image": "docker build . -t {{cookiecutter.docker_image_name}}:local --build-arg UID=$(id -u) --build-arg GID=$(id -g)",
